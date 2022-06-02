@@ -17,7 +17,7 @@ namespace InternetShopWPF.Models
         private float _averageRating;
         private string _decription;
 
-        public Product_Model() : this(String.Empty, String.Empty, String.Empty,0,0,0,0)
+        public Product_Model() : this(String.Empty, String.Empty, "\\Recourse\\defaultProduct.png", 0,0,0,0)
         {
         }
         public Product_Model(string name, string description, string image, float priceWithDiscount, 

@@ -1,9 +1,9 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using InternetShopWPF.Controllers;
 using InternetShopWPF.Models;
 using InternetShopWPF.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace InternetShopWPF.ViewModel
@@ -24,13 +24,18 @@ namespace InternetShopWPF.ViewModel
         }
 
         private ObservableCollection<Product_Model> _products;
+
         private RelayCommand _addCommand;
+        private RelayCommand _removeCommand;
+        private RelayCommand _updateCommand;
+
         private Product_Model _selectedProduct;
+        private WriteReadController _writeReadController;
 
         public MainWindow_ViewModel()
         {
-            _selectedProduct = new Product_Model();
-            _products = new ObservableCollection<Product_Model>();
+            _writeReadController = new WriteReadController();
+            _products = new ObservableCollection<Product_Model>(_writeReadController.ReadFromFile());
         }
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
@@ -57,5 +62,45 @@ namespace InternetShopWPF.ViewModel
             }
         }
 
+        public RelayCommand RemoveCommand
+        {
+            get
+            {
+                return _removeCommand ?? (_removeCommand = new RelayCommand(() =>
+                {
+                    if(SelectedProduct != null)
+                        _products.Remove(SelectedProduct);  
+                }));
+            }
+            set
+            {
+                _removeCommand = value;
+            }
+        }
+
+        public RelayCommand UpdateCommand
+        {
+            get
+            {
+                return _updateCommand ?? (_updateCommand = new RelayCommand(() =>
+                {
+                    if (SelectedProduct != null)
+                    {
+                        AddingWindow addingWindow = new AddingWindow();
+                        addingWindow.DataContext = this;
+                        addingWindow.ShowDialog();
+                    }
+                }));
+            }
+            set
+            {
+                _updateCommand = value;
+            }
+        }
+
+        ~MainWindow_ViewModel()
+        {
+            _writeReadController.WriteInFile(_products);
+        }
     }
 }

@@ -16,12 +16,12 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ListBox Grid.ColumnSpan="2" Margin="0,0,95,0"  ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}"
-                 SelectedItem="{Binding SelectedProduct}">
+                 SelectedItem="{Binding SelectedProduct,  UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <GroupBox>
                         <StackPanel Orientation="Horizontal">
-                            <Image Width="250" Height="250" Source="{Binding ProductImage, UpdateSourceTrigger=PropertyChanged}"></Image>
+                            <Image Width="150" Height="150"  Source="{Binding ProductImage,  UpdateSourceTrigger=PropertyChanged}"></Image>
                             <TextBlock Padding="20" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
                             <materialDesign:RatingBar Margin="-90,60,26,30" Value="{Binding AvarageRating, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
                             <TextBlock Margin="-15,65,0,0" Text="{Binding CountResponse, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
@@ -45,22 +45,36 @@
             ToolTip="MaterialDesignFloatingActionDarkButton">
             <materialDesign:PackIcon Kind="PlusCircleOutline" Height="40" Width="40"/>
         </Button>
+        <Button Grid.Column="0"
+                Command="{Binding RemoveCommand}"
+            Margin="0,460,60,0"
+            Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+            ToolTip="MaterialDesignFloatingActionDarkButton">
+            <materialDesign:PackIcon Kind="TrashCanCircleOutline" Height="40" Width="40"/>
+        </Button>
+        <Button Grid.Column="0"
+                Command="{Binding UpdateCommand}"
+            Margin="0,460,-70,0"
+            Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+            ToolTip="MaterialDesignFloatingActionDarkButton">
+            <materialDesign:PackIcon Kind="Update" Height="40" Width="40"/>
+        </Button>
 
         <Grid Grid.Column="2"  DataContext="{Binding SelectedProduct}">
             <StackPanel>
                 <Image Width="250" Height="250" Source="{Binding ProductImage, UpdateSourceTrigger=PropertyChanged}"></Image>
-                <TextBlock Padding="20" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-                <materialDesign:RatingBar Margin="0,0,0,0" Value="{Binding AvarageRating, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" />
-                <TextBlock Margin="125,-20,0,0" Text="{Binding CountResponse, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                <TextBlock Padding="20" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="{Binding Name}"></TextBlock>
+                <materialDesign:RatingBar Margin="0,0,0,0" Value="{Binding AvarageRating}" IsReadOnly="True" />
+                <TextBlock Margin="125,-20,0,0" Text="{Binding CountResponse}"></TextBlock>
                 <TextBlock Margin="145,-20,0,0" Text="Відгуків"></TextBlock>
                 <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}" TextDecorations="Strikethrough" 
-                                 Margin="-0,5,0,0" FontSize="13" Text="{Binding PriceWithoutDiscount, StringFormat='c', UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                 Margin="-0,5,0,0" FontSize="13" Text="{Binding PriceWithoutDiscount, StringFormat='c'}"></TextBlock>
                 <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}"
                                  Margin="5,5,0,0" FontSize="18" Foreground="#c62828" 
-                                       FontWeight="Bold" Text="{Binding PriceWithDiscount, StringFormat='c', UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                       FontWeight="Bold" Text="{Binding PriceWithDiscount, StringFormat='c'}"></TextBlock>
                 <TextBlock Style="{StaticResource MaterialDesignBody2TextBlock}"
-                                 Padding="50" FontSize="13" TextWrapping="Wrap"  Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
-                <Button Margin="0,10,0,0">
+                                 Padding="50" FontSize="13" TextWrapping="Wrap"  Text="{Binding Description}"></TextBlock>
+                <Button Margin="0,-5,5,0">
                     <materialDesign:PackIcon  Kind="CartOutline" />
                 </Button>
             </StackPanel>
